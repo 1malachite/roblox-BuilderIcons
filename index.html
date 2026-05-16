@@ -3,59 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Visual reference for Roblox BuilderIcons — browse, search, and download Regular & Filled variants">
-<title>BuilderIcons — Roblox Icon Browser</title>
+<meta name="description" content="Visual reference for Roblox BuilderIcons. Browse, search, preview, and download icon variants.">
+<title>BuilderIcons | Roblox Icon Catalogue</title>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="%23E2231A"/><path d="M8 24L11.2 8H22L20.3 16.4H15.7L15.1 19.6H19.7L18.8 24H8Z" fill="white"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
 </head>
-<body>
+<body data-theme="dark">
 <div class="app-shell">
-  <h2 class="sr-only">BuilderIcons — Roblox icon browser with Regular and Filled variants</h2>
+  <h2 class="sr-only">BuilderIcons Roblox icon catalogue</h2>
 
-  <div class="header">
-  <div class="header-top">
-    <svg class="rb-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="32" height="32" rx="4" fill="#e2231a"/>
-      <path d="M8 24L11.2 8H22L20.3 16.4H15.7L15.1 19.6H19.7L18.8 24H8Z" fill="white"/>
-    </svg>
-    <h1>Builder<span>Icons</span></h1>
-  </div>
-  <div class="stats" id="stats">
-    <div class="stat">Loading…</div>
+  <header class="topbar">
+    <div class="brand-block">
+      <svg class="rb-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="32" height="32" rx="4" fill="#E2231A"/>
+        <path d="M8 24L11.2 8H22L20.3 16.4H15.7L15.1 19.6H19.7L18.8 24H8Z" fill="white"/>
+      </svg>
+      <div>
+        <p class="eyebrow">Roblox Builder Icons</p>
+        <h1>Icon Catalogue</h1>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="implementation-toggle" id="implementationToggle" type="button" aria-label="Open implementation example" title="Open implementation example">
+        <span aria-hidden="true">{ }</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle color theme" title="Toggle color theme">
+        <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☼</span>
+        <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">◐</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="control-rail">
+      <div class="rail-panel">
+        <div class="panel-label">Search</div>
+        <label class="search-wrap" for="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="search" placeholder="Search icons" autocomplete="off">
+        </label>
+      </div>
+
+      <div class="rail-panel">
+        <div class="panel-label">Variant</div>
+        <div class="toggle-group" id="variantToggle">
+          <button class="active" data-v="both" type="button">Both</button>
+          <button data-v="reg" type="button">Regular</button>
+          <button data-v="fill" type="button">Filled</button>
+        </div>
+        <div class="rail-stats" id="stats">
+          <div class="stat-card">Loading...</div>
+        </div>
+      </div>
+
+      <div class="rail-panel category-panel">
+        <div class="panel-header">
+          <div class="panel-label">Categories</div>
+        </div>
+        <div class="tabs" id="tabs" role="tablist" aria-label="Icon categories"></div>
+      </div>
+    </aside>
+
+    <main class="catalogue-shell">
+      <div class="meta-bar">
+        <div>
+          <p class="meta-kicker">Catalogue</p>
+          <h2>Browser</h2>
+        </div>
+        <div class="meta-summary">
+          <div class="count-badge" id="countBadge"></div>
+          <div class="meta-hint">Hover or click a card to inspect it.</div>
+        </div>
+      </div>
+
+      <div id="content">
+        <div class="loading">
+          <div class="spinner"></div>
+          <div class="loading-text">Loading icons from Roblox Client Tracker...</div>
+        </div>
+      </div>
+    </main>
   </div>
 </div>
 
-<div class="toolbar">
-  <div class="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-    <input type="text" id="search" placeholder="Search icons…" autocomplete="off">
-  </div>
-  <div class="toggle-group" id="variantToggle">
-    <button class="active" data-v="both">Both</button>
-    <button data-v="reg">Regular</button>
-    <button data-v="fill">Filled</button>
+<div class="icon-modal" id="iconModal" aria-hidden="true">
+  <div class="icon-modal-backdrop" data-modal-close></div>
+  <div class="icon-modal-panel" role="dialog" aria-modal="true" aria-labelledby="iconModalTitle">
+    <button class="icon-modal-close" type="button" data-modal-close aria-label="Close preview">×</button>
+    <div class="icon-modal-body" id="iconModalBody"></div>
   </div>
 </div>
 
-<div class="tabs" id="tabs"></div>
-
-<div class="meta-bar">
-  <div class="legend">
-    <div class="legend-item"><div class="dot dot-both"></div> Both variants</div>
-    <div class="legend-item"><div class="dot dot-reg"></div> Regular only</div>
-    <div class="legend-item"><div class="dot dot-fill"></div> Filled only</div>
-  </div>
-  <div class="count-badge" id="countBadge"></div>
-</div>
-
-<div id="content">
-  <div class="loading">
-    <div class="spinner"></div>
-    <div class="loading-text">Loading icons from Roblox client tracker…</div>
+<div class="icon-modal icon-modal-small" id="iconInfoModal" aria-hidden="true">
+  <div class="icon-modal-backdrop" data-info-close></div>
+  <div class="icon-modal-panel" role="dialog" aria-modal="true" aria-labelledby="iconInfoModalTitle">
+    <button class="icon-modal-close" type="button" data-info-close aria-label="Close codepoint details">×</button>
+    <div class="icon-modal-body" id="iconInfoModalBody"></div>
   </div>
 </div>
+
+<div class="icon-modal" id="implementationModal" aria-hidden="true">
+  <div class="icon-modal-backdrop" data-implementation-close></div>
+  <div class="icon-modal-panel" role="dialog" aria-modal="true" aria-labelledby="implementationModalTitle">
+    <button class="icon-modal-close" type="button" data-implementation-close aria-label="Close implementation example">×</button>
+    <div class="icon-modal-body" id="implementationModalBody"></div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
