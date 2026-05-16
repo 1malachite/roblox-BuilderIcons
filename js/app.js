@@ -230,12 +230,12 @@ function buildIconCard(icon) {
   var hoverOverlay =
     '<div class="card-hover-overlay">' +
       '<div class="hover-meta">' +
-        '<span style="color:var(--rb-muted)">cp</span> <span>' + cpHex + '</span>' +
-        '&nbsp;<span style="color:var(--rb-muted)">uni</span> <span>' + uni + '</span>' +
+        '<span class="hover-meta-label">Code</span> <span>' + cpHex + '</span>' +
+        '&nbsp;<span class="hover-meta-label">Unicode</span> <span>' + uni + '</span>' +
       '</div>' +
       '<div class="hover-actions">' +
         '<button class="hover-btn copy-name-btn" onclick="event.stopPropagation();copyText(\'' + escapedName + '\');showToast(\'Copied name\')">Name</button>' +
-        '<button class="hover-btn" onclick="event.stopPropagation();copyText(\'' + cpHex + '\');showToast(\'Copied codepoint\')">CP</button>' +
+        '<button class="hover-btn" onclick="event.stopPropagation();copyText(\'' + cpHex + '\');showToast(\'Copied codepoint\')">Code</button>' +
         '<button class="hover-btn" onclick="event.stopPropagation();downloadIconPNG(window._icons[\'' + escapedName + '\'],\'' + dlVariant + '\')">PNG</button>' +
         '<button class="hover-btn" onclick="event.stopPropagation();downloadIconSVG(window._icons[\'' + escapedName + '\'],\'' + dlVariant + '\')">SVG</button>' +
       '</div>' +
